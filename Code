@@ -1,0 +1,68 @@
+
+patients = []
+current_id = 1
+
+def register():
+    global current_id
+    print("\n--- REGISTER PATIENT ---")
+    name = input("Enter Name: ")
+    disease = input("Enter Disease: ")
+    
+    # Store as a list
+    patients.append([current_id, name, disease])
+    print("Added! ID is:", current_id)
+    current_id += 1
+
+def view():
+    if len(patients) == 0:
+        print("No records found.")
+    else:
+        print("ID\tName\tDisease")
+        print("-" * 30)
+        for p in patients:
+           
+            print(str(p[0]) + "\t" + p[1] + "\t" + p[2])
+
+def discharge():
+    print("\n--- DISCHARGE & BILL ---")
+    pid_input = input("Enter ID to discharge: ")
+    
+    if pid_input.isdigit():
+        pid = int(pid_input)
+        found = False
+        
+        # Loop to find index
+        for i in range(len(patients)):
+            if patients[i][0] == pid:
+                
+                print("Discharging:", patients[i][1])
+                days = int(input("Days stayed: "))
+                bill = days * 500 
+                
+                print("Total Bill: $" + str(bill))
+                
+                patients.pop(i) 
+                found = True
+                break
+                
+        if not found:
+            print("ID not found.")
+    else:
+        print("Invalid input.")
+
+# Main program
+while True:
+    print("\n1. Register  2. View  3. Discharge  4. Exit")
+    choice = input("Option: ")
+    
+    if choice == '1':
+        register()
+    elif choice == '2':
+        view()
+    elif choice == '3':
+        discharge()
+    elif choice == '4':
+        print("Bye.")
+        break
+    else:
+        print("Invalid choice.")
